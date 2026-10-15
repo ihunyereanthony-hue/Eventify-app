@@ -1,51 +1,55 @@
+import { HOME } from '@/components/RoleShell';
+import { useSession } from '@/services/session';
 import { useRouter } from 'expo-router';
-import { useEffect, useRef, useState } from 'react';
-import { Animated, Image, StyleSheet, View } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { Image, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { mystyles } from '../../styles/main';
 
-const splashOverlay = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFill,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
-const splashContent = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
+// Splash. Quick on purpose (about 1.2s). It then sends the person on:
+//  - already logged in as organizer/staff -> their home
+//  - everyone else -> onboarding 1
 export default function SplashScreen() {
   const router = useRouter();
-  const [showSplash, setShowSplash] = useState(true);
-  const [activeSlide, setActiveSlide] = useState(0);
+  const { session, ready } = useSession();
+  const sessionRef = useRef(session);
+  sessionRef.current = session;
+  const went = useRef(false);
 
-  const splashOpacity = useRef(new Animated.Value(1)).current;
+  const go = () => {
+    if (went.current) return;
+    went.current = true;
+    const s = sessionRef.current;
+    if (s && s.user.role !== 'attendee') router.replace(HOME[s.user.role] as any);
+    else router.replace('/onboarding1' as any);
+  };
 
+  // normal path: session check finished, short pause, go
   useEffect(() => {
-    const timer = setTimeout(() => {
-      router.replace('/(attendees)/event-landing');
-    }, 5000);
+    if (!ready) return;
+    const t = setTimeout(go, 1200);
+    return () => clearTimeout(t);
+  }, [ready]);
 
-    return () => clearTimeout(timer);
-  }, [router]);
+  // safety net: never sit on the splash more than 2.5s even if the session check is slow
+  useEffect(() => {
+    const t = setTimeout(go, 2500);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <SafeAreaView style={mystyles.container1}>
-      {showSplash ? (
-        <Animated.View style={[splashOverlay.container, { opacity: splashOpacity }]}>
-          <View style={splashContent.container}>
-            <Image source={require('../../assets/images/splash-icon - Copy.png')}
-            style={{ width: 55, height: 55 }}
-            resizeMode="contain"
-            />
-          </View>
-        </Animated.View>
-      ) : null}
+      <View style={styles.center}>
+        <Image
+          source={require('../../assets/images/splash-icon - Copy.png')}
+          style={{ width: 55, height: 55 }}
+          resizeMode="contain"
+        />
+      </View>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  center: { ...StyleSheet.absoluteFill, justifyContent: 'center', alignItems: 'center' },
+});
