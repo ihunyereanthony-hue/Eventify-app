@@ -9,14 +9,12 @@ export const FontSize = {
   title: 30,
   hero: 38,
 } as const;
-
 export const FontWeight = {
   regular: '400',
   medium: '500',
   semibold: '600',
   bold: '700',
 } as const;
-
 export const FontFamily = {
   script: 'EventifyScript',
   serif: Platform.select({ ios: 'Georgia', android: 'serif', default: 'serif' }) as string,

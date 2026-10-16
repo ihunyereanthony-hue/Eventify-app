@@ -13,7 +13,7 @@ export const mystyles = StyleSheet.create({
   logoText: { color: '#5A4DDC', fontWeight: 'bold', fontSize: 20 },
   homeIndicator: { position: 'absolute', bottom: 8, width: 128, height: 4, backgroundColor: 'rgba(255, 255, 255, 0.4)', borderRadius: 2 },
   topBar: { paddingTop: 10, marginBottom: 10},
-  heading: { fontSize: 24, fontWeight: 'bold', color: '#000000', marginBottom: 16 },
+  heading: { fontFamily: 'Inter_800ExtraBold',fontSize: 24, fontWeight: 'bold', color: '#000000', marginBottom: 16 },
   profileCard: { backgroundColor: '#FFFFFF', borderRadius: 16, padding: 16, flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 24, borderWidth: 1, borderColor: '#FFFFFF' },
   avatar: { width: 48, height: 48, borderRadius: 24, backgroundColor: '#FFFFFF' },
   infoCard: { backgroundColor: '#FFFFFF', borderRadius: 16, padding: 16, borderWidth: 1, borderColor: '#FFFFFF' },
@@ -304,6 +304,7 @@ export const mystyles = StyleSheet.create({
     marginTop: 20,
   },
   aboutHeading: {
+    fontFamily: 'Inter_800ExtraBold',
     fontSize: 16,
     fontWeight: '700',
     color: '#111827',

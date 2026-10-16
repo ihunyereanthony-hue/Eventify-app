@@ -21,7 +21,7 @@ function outcomeFrom(body: any, fallback: ScanOutcome['status']): ScanOutcome {
 
 export async function submitScan(eventId: string, qrData: string): Promise<ScanOutcome> {
   try {
-    const res = await request('/scans/scan', { method: 'POST', json: { eventId, code: qrData } });
+    const res = await request('/scans/scan', { method: 'POST', json: { qr_token: qrData, event_id: eventId } });
     return outcomeFrom(res, 'confirmed');
   } catch (e) {
     

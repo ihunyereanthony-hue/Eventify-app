@@ -25,14 +25,14 @@ export default function Register() {
     setError(null);
     try {
       const email = f.email.trim();
-      await register({
+      const res: any = await register({
         firstName: f.firstName.trim(),
         lastName: f.lastName.trim(),
         email,
         password: f.password,
         role: role === 'organizer' ? 'organizer' : 'staff',
       });
-      router.replace({ pathname: '/verify-code' as any, params: { email } });
+      router.replace({ pathname: '/verify-code' as any, params: { email, tempToken: res?.tempToken ?? '' } });
     } catch (e) {
       setError(errorText(e));
     } finally {

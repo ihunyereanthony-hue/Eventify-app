@@ -1,9 +1,5 @@
-// One check-in. Phones get a compact two-line row, tablets get a table row
-// (Time / Name / Ticket code / Status / Gate) like the Figma.
-
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-
 import Colour from '../../constants/colour';
 import { FontSize, FontWeight } from '../../constants/typography';
 import type { CheckIn, CheckInStatus } from '../../types/checkIn';
@@ -11,13 +7,11 @@ import { formatTime } from '../../utils/formatDate';
 import { StatusBadge } from '../ui';
 import type { CheckInStatus as BadgeStatus } from '../ui';
 
-// stored rows say "declined", the shared badge calls the same colour "invalid"
 const BADGE: Record<CheckInStatus, { status: BadgeStatus; label: string }> = {
   confirmed: { status: 'confirmed', label: 'Valid' },
   duplicate: { status: 'duplicate', label: 'Duplicate' },
   declined: { status: 'invalid', label: 'Declined' },
 };
-
 export function CheckInTableHead() {
   return (
     <View style={[styles.wide, styles.head]}>
@@ -32,7 +26,6 @@ export function CheckInTableHead() {
 
 export default function CheckInRow({ item, wide = false }: { item: CheckIn; wide?: boolean }) {
   const badge = BADGE[item.status];
-
   if (wide) {
     return (
       <View style={styles.wide}>
@@ -46,7 +39,7 @@ export default function CheckInRow({ item, wide = false }: { item: CheckIn; wide
       </View>
     );
   }
-
+  
   return (
     <View style={styles.row}>
       <View style={styles.text}>

@@ -1,9 +1,5 @@
-// The purple hero + white sheet that every auth screen sits on.
-// Phones stack them, tablets put them side by side like the Figma.
-
 import React, { ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-
 import Colour from '../constants/colour';
 import { FontSize, FontWeight } from '../constants/typography';
 import { useLayout } from '../hooks/useLayout';

@@ -1,7 +1,6 @@
 import { useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
 import { Alert, Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-
 import { SearchIcon } from '@/components/icons';
 import BackHeader from '@/components/organizer/BackHeader';
 import FilledField from '@/components/organizer/FilledField';
@@ -27,8 +26,6 @@ const TABS: { key: Tab; label: string }[] = [
   { key: 'ticket', label: 'Ticket' },
 ];
 const ORDER: Tab[] = ['details', 'staff', 'ticket'];
-
-// tomorrow at 10:00, a sane starting point so the pickers never open on "right now"
 function defaultStart() {
   const d = new Date();
   d.setDate(d.getDate() + 1);
@@ -70,7 +67,6 @@ export default function CreateEvent() {
   };
 
   const submit = async () => {
-    // the date box and the time box are separate pickers, glue them into one moment
     const start = new Date(date);
     start.setHours(time.getHours(), time.getMinutes(), 0, 0);
 

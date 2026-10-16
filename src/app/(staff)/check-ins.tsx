@@ -1,7 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
 import { FlatList, Pressable, RefreshControl, StyleSheet, Text, TextInput, View } from 'react-native';
-
 import { BackChevron, SearchIcon } from '@/components/icons';
 import CheckInRow, { CheckInTableHead } from '@/components/staff/CheckInRow';
 import { EmptyView, ErrorView, LoadingView } from '@/components/StateViews';
@@ -28,7 +27,6 @@ export default function CheckIns() {
   const [filter, setFilter] = useState<Filter>('all');
   const [query, setQuery] = useState('');
   const list = useAsync(() => listCheckIns(String(eventId)), [eventId]);
-
   const rows = useMemo(() => {
     const q = query.trim().toLowerCase();
     return (list.data ?? []).filter(

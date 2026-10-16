@@ -5,19 +5,21 @@ export const API_URL = (process.env.EXPO_PUBLIC_API_URL ?? 'https://qr-attendanc
 
 const TIMEOUT_MS = 60000;
 export const API_ORIGIN = API_URL.replace(/\/api$/, '');
-
+ 
 type Options = {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
   json?: unknown;
   form?: FormData;
   auth?: boolean;
+  token?: string;
 };
 
 export async function request<T = any>(path: string, opts: Options = {}): Promise<T> {
   const { method = 'GET', json, form, auth = true } = opts;
   const headers: Record<string, string> = { Accept: 'application/json' };
 
-  const token = auth ? await getToken() : null;
+  // const token = auth ? await getToken() : null;
+  const token = opts.token ?? (auth ? await getToken() : null);
   if (token) headers.Authorization = `Bearer ${token}`;
 
   let body: any;

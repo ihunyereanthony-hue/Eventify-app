@@ -8,7 +8,7 @@ export default function Onboarding3() {
   const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.topCurve}><Image source={Images.onboarding[2]} style={styles.topImg} /></View>
+      <View style={styles.topCurve}><Image source={require('../../assets/images/onboarding 3.jpeg')} style={styles.topImg} /></View>
       <View style={styles.textWrap}>
         <Text style={styles.title}>Know Who's Checked{"\n"}In, Live</Text>
         <Text style={styles.desc}>Monitor attendance as it happens. Keep track of check-ins, manage your event staff, and access accurate attendance records from one place.</Text>

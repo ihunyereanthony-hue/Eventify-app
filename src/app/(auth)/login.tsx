@@ -12,7 +12,6 @@ import { errorText } from '@/utils/errorText';
 
 export default function Login() {
   const router = useRouter();
-  // other auth screens send people back here with a flag so we can say what just happened
   const { verified, reset } = useLocalSearchParams<{ verified?: string; reset?: string }>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -14,12 +14,10 @@ export default function AttendeeConfirmedScreen(){
           <View style={mystyles.logoContainer}>
            <Image source={require('../../../assets/images/Attendee-confirm.png')} style={{width: 120, height: 120}} />
         </View>
-
         <Text style={mystyles.title1}>Attendee Confirmed!</Text>
         <Text style={mystyles.subtitle}>
           Your ticket is valid and has been successfully registered for event.
         </Text>
-
         <View style={{ width: '100%', gap: 14, alignItems: 'center' }}>
           <TouchableOpacity
             style={{ 

@@ -16,15 +16,12 @@ import { formatTime, sameDay } from '@/utils/formatDate';
 const LABEL = { confirmed: 'Active', duplicate: 'Duplicate', declined: 'Invalid' } as const;
 const BADGE = { confirmed: 'confirmed', duplicate: 'duplicate', declined: 'invalid' } as const;
 
-// a name like  Ada, "Jr"  would break the CSV, so quote anything with a comma or quote in it
 const esc = (v: string) => (/[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v);
 
 export default function AttendanceHistory() {
   const { eventId, eventName } = useLocalSearchParams<{ eventId: string; eventName?: string }>();
   const att = useAsync(() => fetchAttendance(String(eventId)), [eventId]);
   const [picked, setPicked] = useState<Date | null>(null);
-
-  // until someone picks a day, show the day of the latest scan (that's where the data is)
   const day = picked ?? (att.data?.records[0] ? new Date(att.data.records[0].scannedAt) : new Date());
   const rows: CheckIn[] = useMemo(
     () => (att.data?.records ?? []).filter((r) => sameDay(new Date(r.scannedAt), day)),

@@ -4,33 +4,63 @@ import { useState } from 'react';
 import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { mystyles } from '../../../styles/main';
 import { useUserStore } from '../../../useUserStore';
+import { registerAttendee } from '@/services/attendee';
+import { errorText } from '@/utils/errorText';
 
 export default function CreateAccountScreen() {
   const router = useRouter();
-  const { firstName, lastName, email, phone, ticketType, setDetails } = useUserStore();
-  
+  const { firstName, lastName, email, phone, ticketType, eventId, setDetails } = useUserStore();
   const [localFirst, setLocalFirst] = useState(firstName || '');
   const [localLast, setLocalLast] = useState(lastName || '');
   const [localEmail, setLocalEmail] = useState(email || '');
   const [localPhone, setLocalPhone] = useState(phone || '');
   const [selectedTicket, setSelectedTicket] = useState(ticketType || 'Regular');
   const [showDropdown, setShowDropdown] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const handleSaveAndGetCode = async () => {
+  const first = localFirst.trim();
+  const last = localLast.trim();
+  const mail = localEmail.trim();
+  const tel = localPhone.trim();
 
-  const handleSaveAndGetCode = () => {
-    // Save details to store and update name for initials calculation
-    const combinedName = `${localFirst.trim()} ${localLast.trim()}`.trim();
-    
-    setDetails({ 
-      name: combinedName,
-      firstName: localFirst.trim(), 
-      lastName: localLast.trim(), 
-      email: localEmail.trim(), 
-      phone: localPhone.trim(), 
+    if (!first || !last || !mail || !tel) return setError('Please fill in every field.');
+    if (!mail.includes('@')) return setError('Enter a valid email address.');
+    if (!eventId) return setError('Open the event first, then tap Get Ticket.');
+
+    setDetails({
+      name: `${first} ${last}`,
+      firstName: first,
+      lastName: last,
+      email: mail,
+      phone: tel,
       ticketType: selectedTicket,
-      status: 'Pending' // Keeps status pending until verification is completed
+      status: 'Pending',
     });
-    
-    router.push('/(attendees)/verify-ticket');
+
+    setBusy(true);
+    setError(null);
+    try {
+      const { attendeeId } = await registerAttendee({
+        eventId,
+        firstName: first,
+        lastName: last,
+        email: mail,
+        phone: tel,
+        ticketType: selectedTicket,
+      });
+      setDetails({ attendeeId });
+      router.push('/(attendees)/verify-ticket');
+    } catch (e) {
+      const message = errorText(e);
+      if (/already has a ticket/i.test(message)) {
+        router.push('/(attendees)/verify-ticket');
+      } else {
+        setError(message);
+      }
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
@@ -55,13 +85,13 @@ export default function CreateAccountScreen() {
           </View>
           <View >
             <Text style={mystyles.label}>Email address</Text>
-            <TextInput placeholder="Enter your email address" placeholderTextColor="#F3F3F3" value={localEmail} onChangeText={setLocalEmail} keyboardType="email-address" style={mystyles.input1} />
+            <TextInput placeholder="Enter your email address" placeholderTextColor="#F3F3F3" value={localEmail} onChangeText={setLocalEmail} keyboardType="email-address" autoCapitalize="none" autoCorrect={false} style={mystyles.input1} />
           </View>
           <View>
             <Text style={mystyles.label}>Phone number</Text>
             <TextInput placeholder="e.g +234" placeholderTextColor="#F3F3F3" value={localPhone} onChangeText={setLocalPhone} keyboardType="phone-pad" style={mystyles.input1} />
           </View>
-          
+
           <View>
             <Text style={mystyles.label}>Ticket type</Text>
             <TouchableOpacity onPress={() => setShowDropdown(!showDropdown)} style={[mystyles.input1, mystyles.dropdownToggle]}>
@@ -79,11 +109,14 @@ export default function CreateAccountScreen() {
               </View>
             )}
           </View>
+          {!!error && <Text style={mystyles.errorText}>{error}</Text>}
         </View>
       </ScrollView>
 
       <View style={{ width: '100%', paddingTop: 10 }}>
-        <TouchableOpacity style={mystyles.button} onPress={handleSaveAndGetCode}><Text style={mystyles.btnText}>Get Code</Text></TouchableOpacity>
+        <TouchableOpacity style={mystyles.button} onPress={handleSaveAndGetCode} disabled={busy}>
+          <Text style={mystyles.btnText}>{busy ? 'Sending code...' : 'Get Code'}</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

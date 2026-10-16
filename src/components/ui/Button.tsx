@@ -1,10 +1,3 @@
-// ============ BUTTON ============
-// The ONLY button in the app. Three looks:
-//   primary - filled purple (Scan, Log in, Try again)
-//   outline - purple outline (Check-ins)
-//   dark    - solid dark, optional arrow tile (onboarding Next / Continue)
-// Need a new look? Add a variant here, don't build a second button somewhere else.
-
 import React, { ReactNode } from 'react';
 import {
   ActivityIndicator,
@@ -16,22 +9,18 @@ import {
   ViewStyle,
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-
 import Colour, { withAlpha } from '../../constants/colour';
 import { Radius, Size, Spacing } from '../../constants/layout';
 import { FontSize, FontWeight } from '../../constants/typography';
 
 export type ButtonVariant = 'primary' | 'outline' | 'dark';
 export type ButtonSize = 'md' | 'sm';
-
 type Props = {
   label: string;
   onPress: () => void;
   variant?: ButtonVariant;
   size?: ButtonSize;
-  // Optional SVG icon on the left, e.g. the Google "G"
   icon?: ReactNode;
-  // Arrow tile on the right
   arrow?: boolean;
   loading?: boolean;
   disabled?: boolean;
@@ -69,9 +58,6 @@ export default function Button({
 }: Props) {
   const isDark = variant === 'dark';
   const inactive = disabled || loading;
-
-  // dark buttons go see-through brown when disabled instead of just dimming,
-  // coz a dimmed near-black button still looked tappable
   const textColour = isDark
     ? inactive
       ? withAlpha(Colour.ink, 0.45)
@@ -143,7 +129,6 @@ const styles = StyleSheet.create({
   small: { height: Size.buttonHeightSmall },
   dark: { height: 62, borderRadius: Radius.cta },
   primary: { backgroundColor: Colour.primary },
-  // 1.5 border coz 1 looked too thin on the outline buttons
   outline: {
     backgroundColor: Colour.transparent,
     borderWidth: 1.5,
@@ -151,7 +136,6 @@ const styles = StyleSheet.create({
   },
   darkFill: { backgroundColor: Colour.ink },
   inactive: { opacity: 0.5 },
-  // label left, arrow tile right
   withArrow: {
     flexDirection: 'row',
     justifyContent: 'space-between',

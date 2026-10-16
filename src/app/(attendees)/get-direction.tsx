@@ -2,17 +2,17 @@ import React from 'react';
 import {mystyles} from '../../../styles/main';
 import { StyleSheet, View, Text, TouchableOpacity, Linking, Platform } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useUserStore } from '../../../useUserStore';
 
 export default function GetDirectionsScreen() {
   const router = useRouter();
-
+  const { eventVenue } = useUserStore();
   const openGoogleMaps = () => {
-    const venueAddress = encodeURIComponent('Lagos, Nigeria');
+    const venueAddress = encodeURIComponent(eventVenue || 'Lagos, Nigeria');
     const url = Platform.select({
       ios: `maps:0,0?q=${venueAddress}`,
       android: `geo:0,0?q=${venueAddress}`
     });
-    
     const fallbackUrl = `https://www.google.com/maps/search/?api=1&query=${venueAddress}`;
     Linking.openURL(url ?? fallbackUrl).catch(() => {
       Linking.openURL(fallbackUrl);

@@ -1,17 +1,11 @@
-// Date / time field. iOS draws its own compact picker right in the box, Android needs a
-// tap to open the system dialog, hence the two branches.
-// Needs: npx expo install @react-native-community/datetimepicker
-
 import DateTimePicker from '@react-native-community/datetimepicker';
 import React, { useState } from 'react';
 import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
-
 import Colour from '@/constants/colour';
 import { FontSize, FontWeight } from '@/constants/typography';
 import { formatInputDate, formatInputTime } from '@/utils/formatDate';
 
 type Props = { label: string; mode: 'date' | 'time'; value: Date; onChange: (d: Date) => void };
-
 export default function PickerField({ label, mode, value, onChange }: Props) {
   const [open, setOpen] = useState(false);
   const shown = mode === 'date' ? formatInputDate(value) : formatInputTime(value);

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-
 import EventSwitcher from '@/components/organizer/EventSwitcher';
 import { CalendarBox } from '@/components/organizer/organizerIcons';
 import StatTile from '@/components/organizer/StatTile';
@@ -19,7 +18,6 @@ export default function Reports() {
   const eventId = picked ?? events.data?.find((e) => e.isLive)?.id ?? events.data?.[0]?.id ?? null;
   const current = events.data?.find((e) => e.id === eventId);
   const report = useAsync(async () => (eventId ? getEventReport(eventId) : null), [eventId]);
-
   const r = report.data;
   const pct = r && r.registered > 0 ? Math.round((r.checkedIn / r.registered) * 100) : 0;
   const biggest = r ? Math.max(1, ...r.byType.map((t) => t.count)) : 1;

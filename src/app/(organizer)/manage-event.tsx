@@ -1,7 +1,7 @@
+import * as Linking from 'expo-linking';
 import { useLocalSearchParams } from 'expo-router';
 import React, { useState } from 'react';
-import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-
+import { Alert, Image, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { CalendarSmall, PinSmall } from '@/components/icons';
 import BackHeader from '@/components/organizer/BackHeader';
 import ConfirmModal from '@/components/organizer/ConfirmModal';
@@ -75,7 +75,6 @@ function TicketsTab({ eventId }: { eventId: string }) {
     }
   };
 
-  // one row per ticket type when the codes carry one, otherwise a single "All codes" row
   const list = codes.data ?? [];
   const groups = new Map<string, { count: number; used: number }>();
   list.forEach((c) => {
@@ -128,9 +127,11 @@ export default function EventDetails() {
   // the doc has no "get one event" route, so we take it from the list
   const event = useAsync(async () => (await listAssignedEvents()).find((e) => e.id === id) ?? null, [id]);
   const e = event.data;
-
-  // TODO(backend): needs PUT /events/:id, then this opens the create form pre-filled
   const onEdit = () => Alert.alert('Not connected yet', "Editing an event isn't connected to the backend yet.");
+  const onShareLink = () => {
+  const link = Linking.createURL('/event-landing', { queryParams: { eventId: id } });
+  Share.share({ message: `Get your ticket for ${e?.name ?? 'our event'}: ${link}` }).catch(() => {});
+  };
 
   return (
     <ScreenContainer>
@@ -160,7 +161,6 @@ export default function EventDetails() {
             </View>
 
             <SegmentTabs tabs={TABS} value={tab} onChange={setTab} />
-
             {tab === 'overview' && (
               <View style={styles.stack}>
                 <Text style={styles.section}>About Event</Text>
@@ -172,6 +172,7 @@ export default function EventDetails() {
           </ScrollView>
           {tab === 'overview' && (
             <View style={styles.footer}>
+              <Button label="Share Event Link" variant="outline" onPress={onShareLink} />
               <Button label="Edit Details" onPress={onEdit} />
             </View>
           )}
@@ -200,5 +201,5 @@ const styles = StyleSheet.create({
   activeText: { fontSize: FontSize.small, color: Colour.primary },
   wipe: { alignSelf: 'center', paddingVertical: 8 },
   wipeText: { fontSize: FontSize.small, color: Colour.statusInvalidText },
-  footer: { paddingVertical: 14 },
+  footer: { paddingVertical: 14, gap: 10 },
 });

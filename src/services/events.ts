@@ -6,10 +6,9 @@ import { toEvent, unwrapList } from './mappers';
 
 export async function listAssignedEvents(): Promise<StaffEvent[]> {
   const res = await request('/events');
-  return unwrapList(res, 'events', 'data').map(toEvent);
+    return unwrapList(res, 'event', 'events', 'data').map(toEvent);
 }
 
-// Scanner counters. Same endpoint the organizer dashboard uses.
 export async function getEventStats(eventId: string): Promise<EventStats> {
   const { checkedIn, total } = await fetchAttendance(eventId);
   return { checkedIn, total };

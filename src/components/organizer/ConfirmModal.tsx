@@ -1,12 +1,9 @@
-// "Are you sure you want to log out ?" card, also reused for Delete all codes.
 import React from 'react';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
-
 import Colour from '@/constants/colour';
 import { FontSize, FontWeight } from '@/constants/typography';
 
 type Props = { visible: boolean; message: string; confirmLabel: string; onCancel: () => void; onConfirm: () => void };
-
 export default function ConfirmModal({ visible, message, confirmLabel, onCancel, onConfirm }: Props) {
   return (
     <Modal transparent visible={visible} animationType="fade" onRequestClose={onCancel}>

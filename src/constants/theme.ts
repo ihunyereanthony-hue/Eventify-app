@@ -1,5 +1,4 @@
 import '@/global.css';
-
 import { Platform } from 'react-native';
 
 export const Colors = {
@@ -20,10 +19,8 @@ export const Colors = {
 } as const;
 
 export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
-
 export const Fonts = Platform.select({
   ios: {
-  
     sans: 'system-ui',
     serif: 'ui-serif',
     rounded: 'ui-rounded',

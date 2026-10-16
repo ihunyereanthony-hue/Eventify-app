@@ -1,9 +1,5 @@
-// App mark (icon.png) + the bold "Eventify" wordmark from the final Figma.
-// `light` is for purple backgrounds.
-
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-
 import { Images } from '../constants/assets';
 import Colour from '../constants/colour';
 import { FontWeight } from '../constants/typography';

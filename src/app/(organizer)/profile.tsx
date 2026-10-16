@@ -1,7 +1,6 @@
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-
 import BackHeader from '@/components/organizer/BackHeader';
 import ConfirmModal from '@/components/organizer/ConfirmModal';
 import FilledField from '@/components/organizer/FilledField';
@@ -71,7 +70,6 @@ export default function Profile() {
             <Button label="Cancel" variant="outline" onPress={() => setEditing(false)} />
           </View>
         ) : (
-          // password changes go through the same email-code flow as forgot password
           <Pressable onPress={() => router.push('/forgot-password' as any)} accessibilityRole="button" style={styles.changePw}>
             <Text style={styles.changePwText}>Change password</Text>
           </Pressable>
@@ -87,10 +85,9 @@ export default function Profile() {
         message="Are you sure you want to log out ?"
         confirmLabel="Log out"
         onCancel={() => setConfirmOut(false)}
-        // the route guard sees the session disappear and moves us to /login by itself
         onConfirm={() => {
-          setConfirmOut(false);
-          void logout();
+        setConfirmOut(false);
+        void logout();
         }}
       />
     </ScreenContainer>

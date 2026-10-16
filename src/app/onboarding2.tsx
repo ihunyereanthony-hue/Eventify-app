@@ -9,7 +9,7 @@ export default function Onboarding2() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topCurve}>
-        <Image source={Images.onboarding[1]} style={styles.topImg} resizeMode="cover" />
+        <Image source={require('../../assets/images/onboarding 2.jpeg')} style={styles.topImg} resizeMode="cover" />
       </View>
       <View style={styles.textWrap}>
         <Text style={styles.title}>Verify Every Ticket in{"\n"}Seconds</Text>

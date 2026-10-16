@@ -1,7 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-
 import { ResultBadge } from '@/components/icons';
 import { Button, ScreenContainer } from '@/components/ui';
 import Colour from '@/constants/colour';
@@ -14,8 +13,6 @@ const COPY: Record<ScanStatus, { title: string; message: string }> = {
   duplicate: { title: 'Duplicate ticket', message: 'This ticket has already been scanned.' },
   invalid: { title: 'Invalid ticket', message: 'This code is not valid for this event.' },
 };
-
-// anything unexpected counts as invalid, never as a green tick
 const asStatus = (v?: string): ScanStatus => (v === 'confirmed' || v === 'duplicate' ? v : 'invalid');
 
 export default function ScanResult() {

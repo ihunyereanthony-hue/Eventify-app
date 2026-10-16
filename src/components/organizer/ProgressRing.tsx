@@ -1,21 +1,16 @@
-// The big checked-in ring on Live Attendance.
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
-
 import Colour from '@/constants/colour';
 import { FontSize, FontWeight } from '@/constants/typography';
 
 type Props = { value: number; total: number; size?: number };
-
 export default function ProgressRing({ value, total, size = 240 }: Props) {
   const stroke = 20;
   const r = (size - stroke) / 2;
   const c = size / 2;
   const circ = 2 * Math.PI * r;
-  // total can be 0 (no codes uploaded yet), never divide by it
   const pct = total > 0 ? Math.min(value / total, 1) : 0;
-
   return (
     <View style={{ width: size, height: size, alignSelf: 'center' }} accessibilityLabel={`${value} checked in of ${total}`}>
       <Svg width={size} height={size}>

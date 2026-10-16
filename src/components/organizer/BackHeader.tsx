@@ -1,8 +1,6 @@
-// "< Title" row used on the screens that sit on top of the tabs. `right` is for a chip or button.
 import { useRouter } from 'expo-router';
 import React, { ReactNode } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-
 import { BackChevron } from '@/components/icons';
 import Colour from '@/constants/colour';
 import { FontWeight } from '@/constants/typography';

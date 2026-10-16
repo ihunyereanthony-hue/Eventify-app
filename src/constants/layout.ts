@@ -13,7 +13,6 @@ export const Radius = {
   lg: 16,
   xl: 26,
   pill: 999,
-  
   cta: 18,
   tile: 13,
   card: 20,

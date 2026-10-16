@@ -1,9 +1,3 @@
-// ============ TEXT FIELD ============
-// Label on top, underline below, same as the Figma forms.
-// Handles the error text and the show/hide eye for passwords itself,
-// so screens just pass props and don't re-do any of it.
-// Needs react-native-svg (npx expo install react-native-svg).
-
 import React, { useState } from 'react';
 import {
   Pressable,
@@ -14,7 +8,6 @@ import {
   View,
 } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
-
 import Colour from '../../constants/colour';
 import { Size, Spacing } from '../../constants/layout';
 import { FontSize, FontWeight } from '../../constants/typography';
@@ -23,8 +16,6 @@ type Props = TextInputProps & {
   label: string;
   error?: string;
 };
-
-// Eye icon, SVG coz we're not using emoji for icons
 function EyeIcon({ open }: { open: boolean }) {
   return (
     <Svg width={22} height={22} viewBox="0 0 24 24" fill="none">
@@ -48,7 +39,6 @@ export default function TextField({ label, error, secureTextEntry, ...rest }: Pr
   const [focused, setFocused] = useState(false);
   const [hidden, setHidden] = useState(true);
   const isPassword = !!secureTextEntry;
-
   const lineColour = error
     ? Colour.danger
     : focused

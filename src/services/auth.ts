@@ -52,8 +52,12 @@ export const register = (input: SignUpInput) =>
     },
   });
 
-export const verifyCode = (email: string, code: string) =>
-  request('/auth/verify-code', { method: 'POST', json: { email, code }, auth: false });
+// export const verifyCode = (email: string, code: string) =>
+//   request('/auth/verify-code', { method: 'POST', json: { email, code }, auth: false });
+
+export const verifyCode = (email: string, code: string, tempToken: string) =>
+  request('/auth/verify-code', { method: 'POST', json: { email, code }, auth: false, token: tempToken });
+
 
 export const forgotPassword = (email: string) =>
   request('/auth/forgot-password', { method: 'POST', json: { email }, auth: false });

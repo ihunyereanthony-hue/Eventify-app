@@ -12,7 +12,7 @@ export default function Onboarding4() {
         <Text style={styles.title}>Keep Check-in{"\n"}Moving</Text>
         <Text style={styles.desc}>Give your staff a simple scanning experience designed for fast entry, even when connectivity is unreliable.</Text>
       </View>
-      <View style={styles.illustWrap}><Image source={Images.onboarding[3]} style={styles.illust} resizeMode="contain" /></View>
+      <View style={styles.illustWrap}><Image source={require('../../assets/images/onboarding 4.jpeg')} style={styles.illust} resizeMode="contain" /></View>
       <View style={styles.bottom}>
         <View style={styles.row}>
           <TouchableOpacity style={styles.btnLight} onPress={() => (router as any).back()}><Text style={styles.btnLightText}>Back</Text></TouchableOpacity>

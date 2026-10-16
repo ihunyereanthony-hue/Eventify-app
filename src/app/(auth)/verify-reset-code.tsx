@@ -1,7 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
-
 import AuthShell from '@/components/AuthShell';
 import { Button, TextField } from '@/components/ui';
 import Colour from '@/constants/colour';

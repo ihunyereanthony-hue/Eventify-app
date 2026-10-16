@@ -9,7 +9,7 @@ export default function Onboarding1() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topCurve}>
-        <Image source={Images.onboarding[0]} style={styles.topImg} resizeMode="cover" />
+        <Image source={require('../../assets/images/onboarding 1.jpeg')} style={styles.topImg} resizeMode="cover" />
       </View>
       <View style={styles.textWrap}>
         <Text style={styles.title}>Smarter Events.{"\n"}Easier Check - ins.{"\n"}Better Experiences.</Text>

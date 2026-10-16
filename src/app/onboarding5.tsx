@@ -8,7 +8,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export default function Onboarding5() {
   const router = useRouter();
   const [sel, setSel] = useState('');
-
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={styles.backBtn} onPress={() => (router as any).back()}>
@@ -52,7 +51,6 @@ export default function Onboarding5() {
         <TouchableOpacity
           style={[styles.btn, !sel && styles.btnDisabled]}
           disabled={!sel}
-          // the register screen only knows 'organizer' and 'staff'
           onPress={() => (router as any).push({ pathname: '/register', params: { role: sel === 'org' ? 'organizer' : 'staff' } })}
         >
           <Text style={[styles.btnText, !sel && { color: '#9CA3AF' }]}>Continue</Text>

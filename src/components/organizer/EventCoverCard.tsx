@@ -1,9 +1,5 @@
-// The big photo card from the organizer Figma: date chip top-left, title and venue over the photo.
-// No cover from the backend means the repo's fallback image, same as the staff cards.
-
 import React from 'react';
 import { ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
-
 import { PinSmall } from '@/components/icons';
 import { Images } from '@/constants/assets';
 import Colour, { withAlpha } from '@/constants/colour';
@@ -12,7 +8,6 @@ import type { StaffEvent } from '@/types/event';
 import { dayOf, monthOf } from '@/utils/formatDate';
 
 type Props = { event: StaffEvent; onPress: () => void; height?: number };
-
 export default function EventCoverCard({ event, onPress, height = 260 }: Props) {
   return (
     <Pressable
@@ -26,7 +21,6 @@ export default function EventCoverCard({ event, onPress, height = 260 }: Props) 
           <Text style={styles.day}>{dayOf(event.startsAt)}</Text>
           <Text style={styles.month}>{monthOf(event.startsAt)}</Text>
         </View>
-        {/* dark strip behind the text, otherwise white on a bright photo can't be read */}
         <View style={styles.bottom}>
           <Text style={styles.title} numberOfLines={2}>{event.name}</Text>
           {!!event.venue && (

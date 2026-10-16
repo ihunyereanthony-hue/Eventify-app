@@ -1,9 +1,5 @@
-// What a list shows when it has nothing to draw: loading, empty, error, offline.
-// Same four everywhere so no screen invents its own.
-
 import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
-
 import Colour from '../constants/colour';
 import { FontSize, FontWeight } from '../constants/typography';
 import { Button } from './ui';
@@ -42,7 +38,6 @@ export function OfflineView({ onRefresh, onBack }: { onRefresh: () => void; onBa
 }
 
 export function ErrorView({ error, onRetry, onBack }: { error: Error; onRetry: () => void; onBack?: () => void }) {
-  // compare by name, instanceof on Error subclasses has bitten us on Hermes before
   if (error.name === 'NetworkError') return <OfflineView onRefresh={onRetry} onBack={onBack} />;
 
   if (error.name === 'NotConnectedError') {
@@ -53,8 +48,6 @@ export function ErrorView({ error, onRetry, onBack }: { error: Error; onRetry: (
       </View>
     );
   }
-
-  // ApiError messages come from the server, so they're usually safe to show
   const shown = error.name === 'ApiError' ? error.message : "Couldn't load this right now";
   return (
     <View style={styles.box}>

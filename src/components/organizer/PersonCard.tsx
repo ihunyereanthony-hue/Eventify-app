@@ -1,14 +1,10 @@
-// The lavender row used for staff members and live check-ins: avatar, name + subtitle, pill on the right.
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-
 import Colour from '@/constants/colour';
 import { FontSize, FontWeight } from '@/constants/typography';
-
 import { UserIcon } from './organizerIcons';
 
 type Props = { name: string; sub: string; pill: string; onPillPress?: () => void };
-
 export default function PersonCard({ name, sub, pill, onPillPress }: Props) {
   const Pill = onPillPress ? Pressable : View;
   return (

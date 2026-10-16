@@ -13,38 +13,47 @@ interface UserState {
   status: string;
   verificationCode: string;
   isVerified: boolean;
+  eventId: string;
+  attendeeId: string;
+  eventName: string;
+  eventWhen: string;
+  eventVenue: string;
+  eventDescription: string;
+  eventImage: string;
+  qrToken: string;
+  qrCode: string;
   setDetails: (details: Partial<UserState>) => void;
   clearDetails: () => void;
 }
 
+const emptyDetails = {
+  name: '',
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  ticketType: 'Regular',
+  ticketCode: '',
+  status: 'Pending',
+  verificationCode: '',
+  isVerified: false,
+  eventId: '',
+  attendeeId: '',
+  eventName: '',
+  eventWhen: '',
+  eventVenue: '',
+  eventDescription: '',
+  eventImage: '',
+  qrToken: '',
+  qrCode: '',
+};
 
 export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
-      name: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      ticketType: 'Regular',
-      ticketCode: 'CSV-456',
-      status: 'Pending',
-      verificationCode: '',
-      isVerified: false,
-      
+      ...emptyDetails,
       setDetails: (details) => set((state) => ({ ...state, ...details })),
-      clearDetails: () => set({
-        name: '',
-        firstName: '', 
-        lastName: '', 
-        email: '', 
-        phone: '', 
-        ticketType: 'Regular',
-        ticketCode: 'CSV-456',
-        status: 'Pending',
-        verificationCode: '',
-        isVerified: false,
-      }),
+      clearDetails: () => set(emptyDetails),
     }),
     {
       name: 'user-details-storage',

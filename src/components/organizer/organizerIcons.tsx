@@ -1,13 +1,9 @@
-// Icons only the organizer screens use (tab bar, upload box, avatars). Same SVG-only rule as icons.tsx.
-
 import React from 'react';
 import type { ColorValue } from 'react-native';
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
-
 import Colour from '@/constants/colour';
 
 type P = { size?: number; color?: ColorValue };
-
 function Line({ size, color, children }: { size: number; color: ColorValue; children: React.ReactNode }) {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">

@@ -1,5 +1,3 @@
-// Onboarding screens read their colours from here. The values come from colour.ts
-// (the app's single palette), so don't type a hex in this file.
 import Colour from './colour';
 
 export const COLORS = {

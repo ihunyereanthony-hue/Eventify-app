@@ -1,14 +1,9 @@
-// The grey filled input from the organizer forms: label on top, soft grey box.
-// (The staff/auth TextField is the underline one, different look on purpose, it's the Figma.)
-
 import React from 'react';
 import { StyleSheet, Text, TextInput, TextInputProps, View } from 'react-native';
-
 import Colour from '@/constants/colour';
 import { FontSize, FontWeight } from '@/constants/typography';
 
 type Props = TextInputProps & { label: string; error?: string; readOnly?: boolean };
-
 export default function FilledField({ label, error, readOnly, multiline, style, ...rest }: Props) {
   return (
     <View style={styles.wrap}>

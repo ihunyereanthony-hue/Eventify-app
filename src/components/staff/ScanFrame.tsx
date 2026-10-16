@@ -1,9 +1,5 @@
-// Corner brackets round the live camera. The camera goes in as children.
-// Size is a prop now, a fixed 250 looked tiny on tablets.
-
 import React, { ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
-
 import Colour from '../../constants/colour';
 
 export default function ScanFrame({ children, size = 280 }: { children?: ReactNode; size?: number }) {
@@ -22,6 +18,5 @@ export default function ScanFrame({ children, size = 280 }: { children?: ReactNo
 
 const W = 3;
 const styles = StyleSheet.create({
-  // inset a bit so the camera doesn't poke out past the rounded brackets
   inner: { ...StyleSheet.absoluteFill, margin: 10, borderRadius: 12, overflow: 'hidden', backgroundColor: Colour.ink },
 });

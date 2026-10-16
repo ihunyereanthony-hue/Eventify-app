@@ -1,14 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 type State<T> = { data: T | null; loading: boolean; error: Error | null };
-
 export function useAsync<T>(fn: () => Promise<T>, deps: unknown[] = []) {
   const [state, setState] = useState<State<T>>({ data: null, loading: true, error: null });
   const fnRef = useRef(fn);
   fnRef.current = fn;
 
   const alive = useRef(true);
-
   const run = useCallback(async () => {
     setState((s) => ({ ...s, loading: true, error: null }));
     try {

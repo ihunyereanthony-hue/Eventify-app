@@ -6,7 +6,6 @@ export type Session = {
   token: string;
   user: { id: string; fullName: string; email: string; role: Role };
 };
-
 const KEY = 'eventify.session';
 let current: Session | null = null;
 let loaded = false;
@@ -21,7 +20,7 @@ export function loadSession(): Promise<void> {
         try {
           current = raw ? JSON.parse(raw) : null;
         } catch {
-          current = null; // corrupted value, just treat it as signed out
+          current = null;
         }
       })
       .catch(() => {
@@ -34,29 +33,24 @@ export function loadSession(): Promise<void> {
   }
   return loading!;
 }
-
 export async function getToken(): Promise<string | null> {
   await loadSession();
   return current?.token ?? null;
 }
-
 export function getSession() {
   return current;
 }
-
 export async function saveSession(s: Session) {
   current = s;
   loaded = true;
   await SecureStore.setItemAsync(KEY, JSON.stringify(s));
   emit();
 }
-
 export async function clearSession() {
   current = null;
   await SecureStore.deleteItemAsync(KEY).catch(() => {});
   emit();
 }
-
 export function useSession() {
   const [, tick] = useState(0);
   useEffect(() => {

@@ -4,10 +4,9 @@ export class NetworkError extends Error {
     this.name = 'NetworkError';
   }
 }
-
 export class ApiError extends Error {
   status: number;
-  data: any; // whatever JSON the server sent back, scan results need it on 4xx
+  data: any;
   constructor(status: number, message: string, data: any = null) {
     super(message);
     this.name = 'ApiError';
@@ -15,7 +14,6 @@ export class ApiError extends Error {
     this.data = data;
   }
 }
-
 export class NotConnectedError extends Error {
   constructor(what: string) {
     super(`${what} isn't connected to the backend yet.`);

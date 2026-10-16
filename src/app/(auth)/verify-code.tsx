@@ -1,5 +1,5 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 
 import AuthShell from '@/components/AuthShell';
@@ -9,13 +9,9 @@ import { FontSize } from '@/constants/typography';
 import { verifyCode } from '@/services/auth';
 import { errorText } from '@/utils/errorText';
 
-// DEMO ONLY: the verify-code endpoint isn't built on the backend yet, so this code skips it.
-// Delete this line and the check below once the backend is ready.
-const BYPASS_CODE = '244466666';
-
 export default function VerifyCode() {
   const router = useRouter();
-  const { email } = useLocalSearchParams<{ email?: string }>();
+  const { email, tempToken } = useLocalSearchParams<{ email?: string; tempToken?: string }>();
   const [code, setCode] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -25,7 +21,7 @@ export default function VerifyCode() {
     setBusy(true);
     setError(null);
     try {
-      if (code.trim() !== BYPASS_CODE) await verifyCode(String(email ?? ''), code.trim());
+      await verifyCode(String(email ?? ''), code.trim(), String(tempToken ?? ''));
       router.replace({ pathname: '/login' as any, params: { verified: '1' } });
     } catch (e) {
       setError(errorText(e));

@@ -2,7 +2,6 @@ import { CameraView, useCameraPermissions } from 'expo-camera';
 import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useCallback, useRef, useState } from 'react';
 import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
-
 import { BackChevron } from '@/components/icons';
 import CounterTile from '@/components/staff/CounterTile';
 import ScanFrame from '@/components/staff/ScanFrame';
@@ -19,21 +18,14 @@ export default function StaffScanner() {
   const router = useRouter();
   const { width } = useLayout();
   const { eventId, eventName, isLive } = useLocalSearchParams<{ eventId: string; eventName?: string; isLive?: string }>();
-
   const [permission, requestPermission] = useCameraPermissions();
   const [scanError, setScanError] = useState<string | null>(null);
-  // The camera reports the same QR many times a second. Without this lock one scan
-  // turned into ten check-ins.
   const locked = useRef(false);
-
   const stats = useAsync(() => getEventStats(String(eventId)), [eventId]);
-
-  // back from the result screen: unlock the camera and refresh the counters
   useFocusEffect(
     useCallback(() => {
       locked.current = false;
       stats.reload();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [eventId]),
   );
 
@@ -54,7 +46,6 @@ export default function StaffScanner() {
       });
     } catch (e) {
       setScanError(errorText(e));
-      // short pause so a failing code doesn't hammer the backend
       setTimeout(() => {
         locked.current = false;
       }, 1500);

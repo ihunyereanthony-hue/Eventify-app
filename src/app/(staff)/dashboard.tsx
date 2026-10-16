@@ -1,7 +1,6 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
-
 import EventCard from '@/components/EventCard';
 import StaffHeader from '@/components/staff/StaffHeader';
 import { EmptyView, ErrorView, LoadingView } from '@/components/StateViews';
@@ -19,20 +18,16 @@ export default function StaffDashboard() {
   const { isTablet, columns } = useLayout();
   const events = useAsync(listAssignedEvents, []);
   const profile = useAsync(getStaffProfile, []);
-
   const openScanner = (e: StaffEvent) =>
     router.push({ pathname: '/scanner' as any, params: { eventId: e.id, eventName: e.name, isLive: e.isLive ? '1' : '0' } });
   const openCheckIns = (e: StaffEvent) =>
     router.push({ pathname: '/check-ins' as any, params: { eventId: e.id, eventName: e.name } });
-
-  // greeting still shows if only the profile call fails, just without the name
   const header = (
     <View>
       <StaffHeader fullName={profile.data?.fullName ?? null} showLogo={!isTablet} onProfilePress={() => router.push('/settings' as any)} />
       <Text style={styles.section}>Select events</Text>
     </View>
   );
-
   let empty: React.ReactElement | null = null;
   if (events.loading && !events.data) empty = <LoadingView />;
   else if (events.error) empty = <ErrorView error={events.error} onRetry={events.reload} />;
@@ -41,7 +36,6 @@ export default function StaffDashboard() {
   return (
     <ScreenContainer padded={false}>
       <FlatList
-        // numColumns can't change on a live list, so the key forces a remount on rotate
         key={columns}
         numColumns={columns}
         data={events.data ?? []}
@@ -52,7 +46,6 @@ export default function StaffDashboard() {
         ListEmptyComponent={empty}
         refreshControl={<RefreshControl refreshing={events.loading && !!events.data} onRefresh={events.reload} tintColor={Colour.primary} />}
         renderItem={({ item }) => (
-          // margin instead of gap so an odd last card doesn't stretch across the row
           <View style={{ width: `${100 / columns}%`, paddingHorizontal: columns > 1 ? 7 : 0 }}>
             <EventCard
               event={item}

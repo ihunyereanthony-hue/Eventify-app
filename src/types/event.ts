@@ -1,15 +1,14 @@
 export type StaffEvent = {
   id: string;
   name: string;
-  startsAt: string; // ISO date string
+  startsAt: string;
   venue: string;
-  gate: string | null; // gate this staff member is posted at, if the backend says
+  gate: string | null;
   imageUrl: string | null;
   isLive: boolean;
-  guestCount: number | null; // null = backend didn't send it, so we don't show it
-  description: string | null; // the "About Event" text
+  guestCount: number | null;
+  description: string | null;
 };
-
 export type EventStats = {
   checkedIn: number;
   total: number;

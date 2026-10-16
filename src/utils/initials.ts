@@ -1,4 +1,3 @@
-// "First Last" -> "FL". One word -> its first two letters. Empty -> "?".
 export function getInitials(fullName: string | null | undefined): string {
   const parts = (fullName ?? '').trim().split(/\s+/).filter(Boolean);
   if (parts.length === 0) return '?';

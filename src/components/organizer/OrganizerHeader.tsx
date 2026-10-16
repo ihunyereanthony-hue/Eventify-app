@@ -1,8 +1,6 @@
-// Logo + avatar bubble on the home screen. The avatar opens the profile page.
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-
 import Logo from '@/components/Logo';
 import Colour from '@/constants/colour';
 import { FontSize, FontWeight } from '@/constants/typography';
@@ -16,7 +14,6 @@ export default function OrganizerHeader() {
   const { session } = useSession();
   return (
     <View style={styles.row}>
-      {/* the tablet sidebar already has the logo */}
       {isTablet ? <View /> : <Logo size={40} />}
       <Pressable onPress={() => router.push('/profile' as any)} accessibilityRole="button" accessibilityLabel="Your profile" style={styles.avatar}>
         <Text style={styles.initials}>{getInitials(session?.user.fullName)}</Text>

@@ -1,15 +1,11 @@
-// Attendance and Reports are about ONE event. This is the pill that shows which, and a list to switch.
 import React, { useState } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-
 import Colour from '@/constants/colour';
 import { FontSize, FontWeight } from '@/constants/typography';
 import type { StaffEvent } from '@/types/event';
-
 import { ChevronDown } from './organizerIcons';
 
 type Props = { events: StaffEvent[]; selectedId: string | null; onSelect: (id: string) => void };
-
 export default function EventSwitcher({ events, selectedId, onSelect }: Props) {
   const [open, setOpen] = useState(false);
   const current = events.find((e) => e.id === selectedId);

@@ -1,5 +1,3 @@
-// One import line for all the shared UI pieces:
-//   import { Button, TextField, Card } from '@/components/ui';
 export { default as Button } from './Button';
 export { default as TextField } from './TextField';
 export { default as Card } from './Card';

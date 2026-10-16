@@ -1,7 +1,6 @@
 import { useRouter } from 'expo-router';
 import React, { useMemo } from 'react';
 import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
-
 import EventCoverCard from '@/components/organizer/EventCoverCard';
 import OrganizerHeader from '@/components/organizer/OrganizerHeader';
 import StatTile from '@/components/organizer/StatTile';
@@ -21,9 +20,7 @@ export default function OrganizerHome() {
   const { columns } = useLayout();
   const { session } = useSession();
   const events = useAsync(listAssignedEvents, []);
-  // runs again whenever the event list changes, null until there's a list to add up
   const attended = useAsync(async () => (events.data ? getTotalCheckedIn(events.data) : null), [events.data]);
-
   const upcoming = useMemo(() => {
     const startOfToday = new Date();
     startOfToday.setHours(0, 0, 0, 0);
@@ -67,7 +64,7 @@ export default function OrganizerHome() {
         ListEmptyComponent={empty}
         refreshControl={<RefreshControl refreshing={events.loading && !!events.data} onRefresh={events.reload} tintColor={Colour.primary} />}
         renderItem={({ item }) => (
-          // padding instead of gap so an odd last card doesn't stretch across the row
+          
           <View style={{ width: `${100 / columns}%`, paddingHorizontal: columns > 1 ? 7 : 0 }}>
             <EventCoverCard event={item} onPress={() => router.push({ pathname: '/manage-event' as any, params: { eventId: item.id } })} />
           </View>

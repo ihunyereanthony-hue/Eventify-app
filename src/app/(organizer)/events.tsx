@@ -1,7 +1,6 @@
 import { useRouter } from 'expo-router';
 import React, { useMemo } from 'react';
 import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
-
 import EventCoverCard from '@/components/organizer/EventCoverCard';
 import { EmptyView, ErrorView, LoadingView } from '@/components/StateViews';
 import { Button, ScreenContainer } from '@/components/ui';

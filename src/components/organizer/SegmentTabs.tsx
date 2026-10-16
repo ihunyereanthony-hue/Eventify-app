@@ -1,12 +1,9 @@
-// Details | Staff | Ticket pills (create event) and Overview | Staff | Tickets (event details).
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-
 import Colour from '@/constants/colour';
 import { FontSize, FontWeight } from '@/constants/typography';
 
 type Props<K extends string> = { tabs: { key: K; label: string }[]; value: K; onChange: (k: K) => void };
-
 export default function SegmentTabs<K extends string>({ tabs, value, onChange }: Props<K>) {
   return (
     <View style={styles.row}>

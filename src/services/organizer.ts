@@ -4,6 +4,7 @@ import type { EventReport, NewEventInput, PickedFile, TicketCode } from '@/types
 import { request } from '@/services/api';
 import { fetchAttendance } from '@/services/attendance';
 import { unwrapList } from '@/services/mappers';
+import { getSession } from '@/services/session'; 
 
 const asId = (o: any) => String(o?._id ?? o?.id ?? '');
 
@@ -18,12 +19,16 @@ function toTicketCode(o: any): TicketCode {
 }
 
 export async function createEvent(input: NewEventInput): Promise<{ id: string | null }> {
+   const start = new Date(input.startsAt);
+  const startAt = `${String(start.getHours()).padStart(2, '0')}:${String(start.getMinutes()).padStart(2, '0')}`;
   const form = new FormData();
-  form.append('title', input.name);
+  form.append('name', input.name);
   form.append('date', input.startsAt);
-  form.append('location', input.venue);
+  form.append('startAt', startAt);
+  form.append('venue', input.venue);
   form.append('description', input.description);
-  // RN wants this {uri,name,type} object, TS doesn't know about it, hence the cast
+  form.append('organizer_id', getSession()?.user.id ?? '');
+
   if (input.image) form.append('image', input.image as any);
 
   const res = await request<any>('/events', { method: 'POST', form });

@@ -24,8 +24,7 @@ export default function ForgotPassword() {
       await forgotPassword(email.trim());
       router.push({ pathname: '/verify-reset-code' as any, params: { email: email.trim() } });
     } catch (e) {
-      // a 4xx (unknown email, say) still moves on so this screen can't be used to
-      // probe who has an account. Dead connection or a 5xx stops here.
+      
       if (e instanceof ApiError && e.status < 500) router.push({ pathname: '/verify-reset-code' as any, params: { email: email.trim() } });
       else setError(errorText(e));
     } finally {

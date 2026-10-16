@@ -7,7 +7,6 @@ export default function VerifyTicketIncorrectScreen() {
   const router = useRouter();
   const [code, setCode] = useState('');
   const [timer, setTimer] = useState(59);
-  
     useEffect(() => {
       let interval = null;
       if (timer > 0) {
@@ -17,15 +16,13 @@ export default function VerifyTicketIncorrectScreen() {
       }
       return () => clearInterval(interval);
     }, [timer]);
-  
     const handleContinue = () => {
       console.log('Verifying ticket code:', code);
     };
-  
     const handleResend = () => {
       setTimer(59);
     };
-  
+
   return (
     <View style={mystyles.container}>
       <View>
@@ -34,7 +31,6 @@ export default function VerifyTicketIncorrectScreen() {
           </TouchableOpacity>
         <Text style={mystyles.heading}>Verify your ticket</Text>
         <Text style={mystyles.subheading}>Enter the ticket code that has been sent to your email address to get your QR code.</Text>
-        
         <TextInput 
           style={[mystyles.input, mystyles.errorBorder, mystyles.inputError]}
           placeholder="Enter your ticket code here"

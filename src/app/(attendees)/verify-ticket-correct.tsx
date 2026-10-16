@@ -10,7 +10,6 @@ export default function VerifyTicketCorrectScreen() {
   const [loading, setLoading] = useState(false);
   const { setDetails, email, ticketType } = useUserStore();
   const [timer, setTimer] = useState(59);
-    
       useEffect(() => {
         let interval = null;
         if (timer > 0) {
@@ -20,20 +19,16 @@ export default function VerifyTicketCorrectScreen() {
         }
         return () => clearInterval(interval);
       }, [timer]);
-    
       const handleContinue = () => {
         console.log('Verifying ticket code:', code);
       };
-    
       const handleResend = () => {
         setTimer(59);
       };
     
-
   const handleVerifyWithBackend = async () => {
     setLoading(true);
     try {
-      // Replace with your actual backend server API endpoint
       const response = await fetch('https://your-backend-api.com/api/verify-ticket', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -43,15 +38,12 @@ export default function VerifyTicketCorrectScreen() {
           ticketType: ticketType 
         }),
       });
-
       const data = await response.json();
-
       if (response.ok) {
         setDetails({
           ticketCode: data.ticketCode,
           status: data.status || 'Valid',
         });
-        
         router.push('/(attendees)/verify-ticket-success');
       } else {
         Alert.alert('Verification Failed', data.message || 'Invalid ticket code.');

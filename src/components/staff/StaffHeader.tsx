@@ -1,9 +1,5 @@
-// Top of the dashboard: wordmark, bell, avatar, then the greeting.
-// The name comes from the signed-in staff member. Tapping the avatar opens settings.
-
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-
 import Colour from '../../constants/colour';
 import { FontSize, FontWeight } from '../../constants/typography';
 import { greetingForHour } from '../../utils/formatDate';
@@ -12,7 +8,6 @@ import { BellIcon } from '../icons';
 import Logo from '../Logo';
 
 type Props = { fullName: string | null; showLogo?: boolean; onProfilePress?: () => void };
-
 export default function StaffHeader({ fullName, showLogo = true, onProfilePress }: Props) {
   const firstName = fullName?.trim().split(/\s+/)[0];
   const greeting = greetingForHour(new Date().getHours());
@@ -22,7 +17,6 @@ export default function StaffHeader({ fullName, showLogo = true, onProfilePress 
       <View style={styles.top}>
         {showLogo ? <Logo /> : <View />}
         <View style={styles.right}>
-          {/* TODO: unread dot once there's a notifications source */}
           <View accessibilityLabel="Notifications">
             <BellIcon />
           </View>

@@ -1,9 +1,5 @@
-// One event card, used by staff AND organizer. Only the two buttons differ, so the
-// caller passes them in. Content all comes from `event`, nothing typed in here.
-
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-
 import { Images } from '../constants/assets';
 import Colour from '../constants/colour';
 import { FontSize, FontWeight } from '../constants/typography';

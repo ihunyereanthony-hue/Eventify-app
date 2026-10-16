@@ -1,6 +1,5 @@
 import { Stack } from 'expo-router';
 import React from 'react';
-
 export default function AttendeesLayout() {
   return (
     <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#FFFFFF' } }}>

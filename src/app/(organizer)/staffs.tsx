@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import { Alert, FlatList, RefreshControl, StyleSheet, Text, TextInput, View } from 'react-native';
-
 import { SearchIcon } from '@/components/icons';
 import PersonCard from '@/components/organizer/PersonCard';
 import { EmptyView, ErrorView, LoadingView } from '@/components/StateViews';
@@ -14,17 +13,16 @@ export default function Staffs() {
   const staff = useAsync(listStaff, []);
   const [adding, setAdding] = useState(false);
   const [query, setQuery] = useState('');
-
   const rows = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return (staff.data ?? []).filter((s) => !q || s.name.toLowerCase().includes(q));
+  const q = query.trim().toLowerCase();
+  return (staff.data ?? []).filter((s) => !q || s.name.toLowerCase().includes(q));
   }, [staff.data, query]);
 
   let empty: React.ReactElement | null = null;
   if (staff.loading && !staff.data) empty = <LoadingView />;
   else if (staff.error) empty = <ErrorView error={staff.error} onRetry={staff.reload} />;
   else if (staff.data) empty = <EmptyView message="No staff yet." />;
-
+  
   const header = (
     <View style={styles.header}>
       <View style={styles.titleRow}>

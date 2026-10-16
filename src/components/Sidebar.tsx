@@ -1,18 +1,12 @@
-// Tablet-only left nav (the Figma sidebar). Phones never render this, they get stack screens.
-// Only lists screens that can open without picking an event first. Scan and check-ins
-// need an event, so they stay on the cards.
-
 import { usePathname, useRouter } from 'expo-router';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-
 import Colour, { withAlpha } from '../constants/colour';
 import { FontSize, FontWeight } from '../constants/typography';
 import { confirmSignOut } from '../utils/signOut';
 import Logo from './Logo';
 
 export type NavItem = { label: string; href: string };
-
 type Props = { items: NavItem[]; name: string; roleLabel: string };
 
 export default function Sidebar({ items, name, roleLabel }: Props) {

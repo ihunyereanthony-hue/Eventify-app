@@ -1,7 +1,6 @@
 import { useFocusEffect, useRouter } from 'expo-router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
-
 import EventSwitcher from '@/components/organizer/EventSwitcher';
 import PersonCard from '@/components/organizer/PersonCard';
 import ProgressRing from '@/components/organizer/ProgressRing';
@@ -20,14 +19,9 @@ export default function LiveAttendance() {
   const router = useRouter();
   const events = useAsync(listAssignedEvents, []);
   const [picked, setPicked] = useState<string | null>(null);
-
-  // default to the live event, otherwise the first one in the list
   const eventId = picked ?? events.data?.find((e) => e.isLive)?.id ?? events.data?.[0]?.id ?? null;
   const current = events.data?.find((e) => e.id === eventId);
-
   const att = useAsync(async () => (eventId ? fetchAttendance(eventId) : null), [eventId]);
-
-  // only poll while this tab is on screen
   const [focused, setFocused] = useState(false);
   useFocusEffect(
     useCallback(() => {

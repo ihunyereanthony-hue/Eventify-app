@@ -1,7 +1,6 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-
 import { BackChevron } from '@/components/icons';
 import { Button, Card, ScreenContainer } from '@/components/ui';
 import Colour from '@/constants/colour';
