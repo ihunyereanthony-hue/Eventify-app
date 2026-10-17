@@ -1,7 +1,3 @@
-import * as Linking from 'expo-linking';
-import { useLocalSearchParams } from 'expo-router';
-import React, { useState } from 'react';
-import { Alert, Image, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { CalendarSmall, PinSmall } from '@/components/icons';
 import BackHeader from '@/components/organizer/BackHeader';
 import ConfirmModal from '@/components/organizer/ConfirmModal';
@@ -12,7 +8,6 @@ import SegmentTabs from '@/components/organizer/SegmentTabs';
 import UploadBox from '@/components/organizer/UploadBox';
 import { EmptyView, ErrorView, LoadingView } from '@/components/StateViews';
 import { Button, ScreenContainer } from '@/components/ui';
-import { Images } from '@/constants/assets';
 import Colour from '@/constants/colour';
 import { FontSize, FontWeight } from '@/constants/typography';
 import { useAsync } from '@/hooks/useAsync';
@@ -21,6 +16,10 @@ import { deleteAllCodes, listCodes, uploadCodes } from '@/services/organizer';
 import { listEventStaff } from '@/services/staff';
 import { errorText } from '@/utils/errorText';
 import { formatLongDate } from '@/utils/formatDate';
+import * as Linking from 'expo-linking';
+import { useLocalSearchParams } from 'expo-router';
+import { useState } from 'react';
+import { Alert, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 
 type Tab = 'overview' | 'staff' | 'tickets';
 const TABS: { key: Tab; label: string }[] = [
@@ -124,7 +123,6 @@ export default function EventDetails() {
   const { eventId } = useLocalSearchParams<{ eventId: string }>();
   const id = String(eventId);
   const [tab, setTab] = useState<Tab>('overview');
-  // the doc has no "get one event" route, so we take it from the list
   const event = useAsync(async () => (await listAssignedEvents()).find((e) => e.id === id) ?? null, [id]);
   const e = event.data;
   const onEdit = () => Alert.alert('Not connected yet', "Editing an event isn't connected to the backend yet.");
@@ -145,7 +143,6 @@ export default function EventDetails() {
       ) : (
         <>
           <ScrollView contentContainerStyle={styles.content}>
-            <Image source={e.imageUrl ? { uri: e.imageUrl } : Images.eventFallback} style={styles.cover} accessibilityLabel={`${e.name} cover`} />
             <View style={styles.stack}>
               <Text style={styles.title}>{e.name}</Text>
               <View style={styles.meta}>

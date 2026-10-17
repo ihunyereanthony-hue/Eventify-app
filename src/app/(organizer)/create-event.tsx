@@ -1,12 +1,9 @@
-import { useRouter } from 'expo-router';
-import React, { useMemo, useState } from 'react';
-import { Alert, Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SearchIcon } from '@/components/icons';
 import BackHeader from '@/components/organizer/BackHeader';
 import FilledField from '@/components/organizer/FilledField';
 import PersonCard from '@/components/organizer/PersonCard';
-import { pickCsv, pickImage } from '@/components/organizer/pickFiles';
 import PickerField from '@/components/organizer/PickerField';
+import { pickCsv, pickImage } from '@/components/organizer/pickFiles';
 import SegmentTabs from '@/components/organizer/SegmentTabs';
 import UploadBox from '@/components/organizer/UploadBox';
 import { ErrorView, LoadingView } from '@/components/StateViews';
@@ -14,10 +11,13 @@ import { Button, ScreenContainer } from '@/components/ui';
 import Colour from '@/constants/colour';
 import { FontSize, FontWeight } from '@/constants/typography';
 import { useAsync } from '@/hooks/useAsync';
-import { assignStaff, listStaff } from '@/services/staff';
 import { createEvent, uploadCodes } from '@/services/organizer';
+import { assignStaff, listStaff } from '@/services/staff';
 import type { PickedFile } from '@/types/organizer';
 import { errorText } from '@/utils/errorText';
+import { useRouter } from 'expo-router';
+import { useMemo, useState } from 'react';
+import { Alert, Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 type Tab = 'details' | 'staff' | 'ticket';
 const TABS: { key: Tab; label: string }[] = [
@@ -56,9 +56,13 @@ export default function CreateEvent() {
 
   const last = tab === 'ticket';
 
-  const next = () => {
+const next = () => {
     if (tab === 'details' && (!name.trim() || !venue.trim())) {
       setError('Event name and location are required.');
+      return;
+    }
+    if (tab === 'ticket' && !csv) {
+      setError('Ticket CSV file is required.');
       return;
     }
     setError(null);

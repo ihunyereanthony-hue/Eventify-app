@@ -1,7 +1,7 @@
+import type { PickedFile } from '@/types/organizer';
 import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
 import { Alert } from 'react-native';
-import type { PickedFile } from '@/types/organizer';
 const CSV_TYPES = [
   'text/csv',
   'text/comma-separated-values',
@@ -13,7 +13,7 @@ const CSV_TYPES = [
 const MAX_IMAGE_BYTES = 5242880;
 export async function pickCsv(): Promise<PickedFile | null> {
   try {
-    const res = await DocumentPicker.getDocumentAsync({ type: CSV_TYPES, copyToCacheDirectory: true });
+    const res = await DocumentPicker.getDocumentAsync({ type: '*/*', copyToCacheDirectory: true });
     if (res.canceled) return null;
     const f = res.assets[0];
     if (!/\.csv$/i.test(f.name)) {
@@ -22,7 +22,6 @@ export async function pickCsv(): Promise<PickedFile | null> {
     }
     return { uri: f.uri, name: f.name, type: f.mimeType ?? 'text/csv' };
   } catch {
-    // FIX: show a message instead of crashing if the phone can't open the file picker
     Alert.alert('Could not open files', 'Your phone could not open the file picker. Try again, or move the CSV into Downloads first.');
     return null;
   }

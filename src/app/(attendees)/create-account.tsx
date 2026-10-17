@@ -1,11 +1,11 @@
+import { registerAttendee } from '@/services/attendee';
+import { errorText } from '@/utils/errorText';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { mystyles } from '../../../styles/main';
 import { useUserStore } from '../../../useUserStore';
-import { registerAttendee } from '@/services/attendee';
-import { errorText } from '@/utils/errorText';
 
 export default function CreateAccountScreen() {
   const router = useRouter();

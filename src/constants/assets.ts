@@ -1,10 +1,11 @@
 export const Images = {
-  logo: require('../../assets/images/icon.png'),
+  logo: require('../../assets/images/eventify-icon.png'),
   eventFallback: require('../../assets/images/landing-image.jpeg'),
   onboarding: [
     require('../../assets/images/landing-image.jpeg'),
-    require('../../assets/images/image.png'),
-    require('../../assets/images/image - Copy.png'),
-    require('../../assets/images/image - Copy (2).png'),
-  ],
+    require('../../assets/images/onboarding 1.jpeg'),
+    require('../../assets/images/onboarding 2.jpeg'),
+    require('../../assets/images/onboarding 3.jpeg'),
+    require('../../assets/images/onboarding 4.jpeg'),
+  ]
 } as const;

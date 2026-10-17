@@ -1,4 +1,3 @@
-import { Images } from '@/constants/assets';
 import { COLORS } from '@/constants/colors';
 import { useRouter } from 'expo-router';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';

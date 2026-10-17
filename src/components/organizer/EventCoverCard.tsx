@@ -1,37 +1,49 @@
-import React from 'react';
-import { ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
 import { PinSmall } from '@/components/icons';
 import { Images } from '@/constants/assets';
 import Colour, { withAlpha } from '@/constants/colour';
 import { FontSize, FontWeight } from '@/constants/typography';
 import type { StaffEvent } from '@/types/event';
 import { dayOf, monthOf } from '@/utils/formatDate';
+import { createElement } from 'react';
+import { ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
 
 type Props = { event: StaffEvent; onPress: () => void; height?: number };
 export default function EventCoverCard({ event, onPress, height = 260 }: Props) {
-  return (
-    <Pressable
-      onPress={onPress}
-      accessibilityRole="button"
-      accessibilityLabel={`${event.name}, ${event.venue}`}
-      style={({ pressed }) => [styles.card, { height }, pressed && styles.pressed]}
-    >
-      <ImageBackground source={event.imageUrl ? { uri: event.imageUrl } : Images.eventFallback} style={styles.fill} imageStyle={styles.img}>
-        <View style={styles.chip}>
-          <Text style={styles.day}>{dayOf(event.startsAt)}</Text>
-          <Text style={styles.month}>{monthOf(event.startsAt)}</Text>
-        </View>
-        <View style={styles.bottom}>
-          <Text style={styles.title} numberOfLines={2}>{event.name}</Text>
-          {!!event.venue && (
-            <View style={styles.row}>
-              <PinSmall size={16} color={Colour.white} />
-              <Text style={styles.venue} numberOfLines={1}>{event.venue}</Text>
-            </View>
-          )}
-        </View>
-      </ImageBackground>
-    </Pressable>
+  return createElement(
+    Pressable,
+    {
+      onPress,
+      accessibilityRole: 'button',
+      accessibilityLabel: `${event.name}, ${event.venue}`,
+      style: ({ pressed }: { pressed: boolean }) => [styles.card, { height }, pressed && styles.pressed],
+    },
+    createElement(
+      ImageBackground,
+      {
+        source: event.imageUrl ? { uri: event.imageUrl } : Images.eventFallback,
+        style: styles.fill,
+        imageStyle: styles.img,
+      },
+      createElement(
+        View,
+        { style: styles.chip },
+        createElement(Text, { style: styles.day }, dayOf(event.startsAt)),
+        createElement(Text, { style: styles.month }, monthOf(event.startsAt)),
+      ),
+      createElement(
+        View,
+        { style: styles.bottom },
+        createElement(Text, { style: styles.title, numberOfLines: 2 }, event.name),
+        event.venue
+          ? createElement(
+              View,
+              { style: styles.row },
+              createElement(PinSmall, { size: 16, color: Colour.white }),
+              createElement(Text, { style: styles.venue, numberOfLines: 1 }, event.venue),
+            )
+          : null,
+      ),
+    ),
   );
 }
 

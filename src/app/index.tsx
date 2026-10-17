@@ -32,7 +32,7 @@ export default function SplashScreen() {
     <SafeAreaView style={mystyles.container1}>
       <View style={styles.center}>
         <Image
-          source={require('../../assets/images/splash-icon - Copy.png')}
+          source={require('../../assets/images/splash-eventify-icon.png')}
           style={{ width: 55, height: 55 }}
           resizeMode="contain"
         />
